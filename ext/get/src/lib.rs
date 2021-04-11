@@ -14,7 +14,8 @@
  */
 
 #![crate_type = "dylib"]
-#![forbid(unsafe_code)]
+// Disable this because rustc complains about no_mangle being unsafe
+//#![forbid(unsafe_code)]
 #![feature(generators, generator_trait)]
 #![allow(bare_trait_objects)]
 

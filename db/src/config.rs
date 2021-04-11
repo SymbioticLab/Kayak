@@ -165,6 +165,24 @@ pub struct ClientConfig {
     /// This parameter decides the requests type; native or extension.
     pub use_invoke: bool,
 
+    /// SLO target, unit: Cycles
+    pub slo: u64,
+    /// Kayak R Loop slowdown factor
+    pub kayak_rloop_factor: usize,
+    /// Kayak X Loop slowdown factor
+    pub kayak_xloop_factor: usize,
+    /// Initial X for Kayak, range [0,100]
+    pub invoke_p: usize,
+    /// Initial outstanding requests
+    pub max_out: usize,
+
+    /// Switch Bimodal mode on
+    pub bimodal: bool,
+    /// Bimodal mode only: Bimodal Interval, unit: Cycles
+    pub bimodal_interval: u64,
+    /// Bimodal mode only: Computation weight of the 2nd mode, in addition to order
+    pub order2: u32,
+
     /// Length of the key for requests generation.
     pub key_len: usize,
     /// Length of the value for requests generation and response parsing.

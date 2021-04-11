@@ -29,11 +29,11 @@ client_ip = "192.168.0.1"
 ############################### GENERIC SERVER CONFIG ##########################
 
 # The number of tenants to create on startup.
-num_tenants = 8
+num_tenants = 1
 
 # The workload to setup the server for. Supported workloads: SANITY, YCSB,
 # AGGREGATE, TAO.
-workload = "YCSB"
+workload = "PUSHBACK"
 
 # The number of records to setup per tenant.
 num_records = 1000000
