@@ -1,62 +1,51 @@
-# Splinter
-A multi-tenant key-value store into which untrusted extensions can be pushed
-down at run-time
+# Kayak
+Kayak is a prototype for proactive-adaptive arbitration between shipping compute and shipping data. Kayak is a fork of [Splinter](https://github.com/utah-scs/splinter).
 
-## Running Splinter on CloudLab
-To run Sandstorm on [CloudLab](https://www.cloudlab.us/login.php), do the
-following
+## Setting up Kayak
+To run Kayak on [CloudLab](https://www.cloudlab.us/) using `xl170` machine, follow these steps:
+1. Instantiate a CloudLab cluster using the python profile `cloudlab_profile.py`.
+1. Install MLNX OFED driver. For compatibility, check [here](https://www.mellanox.com/support/mlnx-ofed-matrix?mtag=linux_sw_drivers). The [LTS version](https://content.mellanox.com/ofed/MLNX_OFED-4.9-2.2.4.0/MLNX_OFED_LINUX-4.9-2.2.4.0-ubuntu18.04-x86_64.tgz) is recommended.
+2. Run the provided `setup.sh`. This will install DPDK as well as the latest version of Rust.
+3. `make`.
+4. Create `splinter/client.toml` for client configuration and `db/server.toml` for server configuration.
 
-1. Instantiate an experiment using the `splinter-cluster` profile under the
-    `sandstorm` project (you will need to join the project first). When asked,
-    allocate two machines for the experiment.
-2. Next, run
-    `python3 scripts/everything/main.py --setup --build <cloudlab-username> <any-host-in-cluster> <command/extension>`
-    From the root directory of the project on any machine outside or inside the cluster.
-    This script is capable of: 
-      - Installing Rust
-      - Installing DPDK
-      - Setting up NIC and MAC addresses
-      - Compiling Server and Client Rust
-      - Pushing and recompiling local commits
-      - Running extensions/clients
-      - logging output to `logs/latest/`
-    If you want to know more about the features of this script,
-    use `python3 scripts/everything/main.py -h`
-  
-## How to run server and client for each extension
-To update the configuration parameters, change `db/server.toml` on the server side and `splinter/client.toml` on the client side.
+You can also refer to the README.md of splinter [here](https://github.com/utah-scs/splinter/blob/master/README.md) or [here](README_Splinter.md).
 
-To run the extension on the client-side, use `use_invoke = false` and for the server-side use `use_invoke=true`. And to run the extension on both on the server-side and client-side, keep `use_invoke = true` and add `pushback` feature in `db/Cargo.toml` on the server-side.
+### Running Baseline
+To run the YCSB-T workload:
+Inside `splinter/`, run
+`sudo env RUST_LOG=debug LD_LIBRARY_PATH=../net/target/native ./target/release/ycsb-t`
 
-Change `num_tenants` and `num_keys` on both the sides. The server uses these parameters to populate the tables and extension for different number of extensions and the client uses these parameters to generate the load.
+To run the synthetic workload:
+Inside `splinter/`, run
+`sudo env RUST_LOG=debug LD_LIBRARY_PATH=../net/target/native ./target/release/pushback`
 
-### Aggregate Extension
-`key_size = 8`
 
-`value_size = 30`
+### Running Kayak
+To run the YCSB-T workload: 
+Inside `splinter/`, run
+`sudo env RUST_LOG=debug LD_LIBRARY_PATH=../net/target/native ./target/release/ycsb-t-kayak`
 
-`num_aggr = X`	// The number of record accessed for per aggregate operation.
+To run the synthetic workload:
+Inside `splinter/`, run
+`sudo env RUST_LOG=debug LD_LIBRARY_PATH=../net/target/native ./target/release/pushback-kayak`
 
-`order = X`	// The amound of computation(multiplication) for per aggregate operation.
 
-### Analysis Extension
-`key_size = 30`
 
-`value_size = 108`
+## Notes
+please consider to cite our paper if you use the code or data in your research project.
+```
+@inproceedings{kayak-nsdi21,
+  author    = {Jie You and Jingfeng Wu and Xin Jin and Mosharaf Chowdhury},
+  booktitle = {USENIX NSDI},
+  title     = {Ship Compute or Ship Data? Why Not Both?},
+  year      = {2021}
+}
+```
 
-Also add the feature `ml_model` in `db/Cargo.toml`.
+## Acknowledgements
 
-### Auth Extension
-`key_size = 30`
+Thanks to Chinmay Kulkarni, Ankit Bhardwaj and Ryan Stutsman for the [Splinter repo](https://github.com/utah-scs/splinter).
 
-`value_size = 72`
-
-### Pushback Extension
-`key_size = 30`
-
-`value_size = 100`
-
-`num_aggr = X` // The number of records accessed per operation.
-
-`order = X` // The amount of compute per operation in terms of CPU cycles.
-
+## Contact
+Jie You (jieyou@umich.edu)

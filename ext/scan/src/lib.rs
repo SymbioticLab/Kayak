@@ -14,7 +14,7 @@
  */
 
 #![crate_type = "dylib"]
-#![forbid(unsafe_code)]
+//#![forbid(unsafe_code)]
 #![feature(generators, generator_trait)]
 #![allow(bare_trait_objects)]
 

@@ -12,7 +12,8 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-#![forbid(unsafe_code)]
+// Disable this because rustc complains about no_mangle being unsafe
+//#![forbid(unsafe_code)]
 #![feature(generators)]
 #![feature(generator_trait)]
 #![no_std]

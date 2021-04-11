@@ -29,7 +29,7 @@ install_addr = "127.0.0.1:7700"
 ############################### GENERIC CLIENT CONFIG ##########################
 
 # The workload to setup the client for. Supported workloads: YCSBT.
-workload = "YCSBT"
+workload = "PUSHBACK"
 
 # If true, client generates open loop-load, otherwise the client generates
 # closed-loop load.
@@ -41,7 +41,7 @@ use_invoke = true
 
 # The number of tenants to generate requests for. The exact tenant id for a
 # particular request should be generated from a Zipfian distribution.
-num_tenants = 8
+num_tenants = 1
 
 # The skew parameter for the Zipfian distribution used to generate tenant id's
 # for RPC requests.
@@ -66,6 +66,35 @@ n_keys = 1000000
 # The skew of the Zipfian distribution from which keys are sampled.
 skew = 0.99
 
+# Computation weight (for PUSHBACK/AGGREGATE etc.): The order of the final result of the aggregation.
+order = 1
+
+#### Kayak configurations. see db/src/config.rs ####
+
+# SLO target, unit: Cycles
+slo = 240000
+
+# Kayak R Loop slowdown factor
+kayak_rloop_factor = 4000
+
+# Kayak X Loop slowdown factor
+kayak_xloop_factor = 40000
+
+# Initial X for Kayak, range [0,100]
+invoke_p = 100
+
+# Initial outstanding requests
+max_out = 16
+
+# Switch Bimodal mode on
+bimodal = false
+
+# Bimodal mode only: Computation weight of the 2nd mode, in addition to order
+order2 = 4000
+
+# Bimodal mode only: Interval between two modes, unit: Cycles
+bimodal_interval = 4800000000
+
 ############################### YCSB CLIENT CONFIG #############################
 
 # The percentage of operations that are puts/writes.
@@ -83,9 +112,6 @@ scan_range = 10
 
 # The number of records to aggregate across.
 num_aggr = 2
-
-# The order of the final result of the aggregation.
-order = 1
 
 ############################### TAO CLIENT CONFIG ##############################
 
