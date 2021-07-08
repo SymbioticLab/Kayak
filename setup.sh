@@ -11,8 +11,11 @@ if [ ! -x "$(command -v rustup)" ] ; then
 fi
 
 source $HOME/.cargo/env
-rustup default nightly
-rustup update
+# Use nightly-2021-03-24
+rustup toolchain install nightly-2021-03-24 --force
+rustup default nightly-2021-03-24
+#rustup default nightly
+#rustup update
 
 bash ./net/3rdparty/get-dpdk.sh
 
