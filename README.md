@@ -3,7 +3,7 @@ Kayak is a prototype for proactive-adaptive arbitration between shipping compute
 
 ## Setting up Kayak
 To run Kayak on [CloudLab](https://www.cloudlab.us/) using `xl170` machine, follow these steps:
-1. Instantiate a CloudLab cluster using the python profile `cloudlab_profile.py`.
+1. Instantiate a CloudLab cluster using the python profile `cloudlab_profile.py`. This should provide a cluster of bare-metal machines running Ubuntu 18.04 with kernel 4.15.0-147 and gcc 7.5.0.
 1. Install MLNX OFED driver. For compatibility, check [here](https://www.mellanox.com/support/mlnx-ofed-matrix?mtag=linux_sw_drivers). The [LTS version](https://content.mellanox.com/ofed/MLNX_OFED-4.9-2.2.4.0/MLNX_OFED_LINUX-4.9-2.2.4.0-ubuntu18.04-x86_64.tgz) is recommended.
 2. Run the provided `setup.sh`. This will install DPDK as well as the latest version of Rust.
 3. `make`.
